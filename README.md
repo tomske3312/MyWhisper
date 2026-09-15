@@ -30,6 +30,7 @@ py -3.11 -m venv buildenv
 .\buildenv\Scripts\pip install -r requirements.txt
 .\buildenv\Scripts\python run.py                            # abrir la app
 .\buildenv\Scripts\python -m unittest discover -s tests     # pruebas
+.\buildenv\Scripts\python run.py --diagnostico audio.mp3    # revisar GPU, modelo y transcripción
 .\build.ps1                                                 # compilar y armar el ZIP
 ```
 

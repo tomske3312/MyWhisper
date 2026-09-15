@@ -116,22 +116,18 @@ def first_file_from_argv() -> Path | None:
 
 
 def wants_diagnostic() -> bool:
-    """El modo diagnóstico se activa por bandera o por el nombre del ejecutable.
+    """Modo diagnóstico: sólo para desarrollo, `python run.py --diagnostico`.
 
-    Lo segundo es lo que importa para el usuario final: `MyWhisper-Diagnostico.exe`
-    es un segundo .exe con consola dentro de la misma carpeta, y se usa haciéndole
-    doble clic. Nadie tiene que escribir una bandera en una terminal.
+    En el .exe se ignora. Es una app de ventana sin consola: lo que imprime el
+    diagnóstico no se vería en ningún lado, y la app quedaría abierta sin ventana.
     """
-    if "--diagnostico" in sys.argv:
-        return True
-    return "diagnostico" in Path(sys.executable).stem.lower()
+    return "--diagnostico" in sys.argv and not paths.is_frozen()
 
 
 def run_diagnostic(source: Path | None) -> int:
-    """Modo sin ventana: `MyWhisper.exe --diagnostico [archivo]`.
+    """Modo sin ventana: `python run.py --diagnostico [archivo]`.
 
-    No está pensado para el uso normal — existe para cuando algo falla en una
-    máquina a la que no tengo acceso. Imprime qué encontró y, si le pasan un
+    Imprime qué encontró (placa, driver, pack CUDA, modelo) y, si le pasan un
     audio, transcribe de verdad para probar la cadena entera.
     """
     from . import __version__, engine
@@ -203,18 +199,7 @@ def main() -> int:
                 log.warning("El pack CUDA está pero no responde; se usará CPU.")
 
     if wants_diagnostic():
-        codigo = run_diagnostic(first_file_from_argv())
-        if paths.is_frozen():
-            # Si llegó acá por doble clic, la consola se cerraría de golpe y no
-            # alcanzaría a leer nada. Si en cambio lo lanzaron desde un script
-            # y no hay stdin, `input()` levanta EOFError: no es motivo para
-            # terminar con un traceback después de haber hecho bien el trabajo.
-            print("\nArrastrá un audio sobre este .exe para probar la transcripción.")
-            try:
-                input("Enter para cerrar…")
-            except (EOFError, KeyboardInterrupt):
-                pass
-        return codigo
+        return run_diagnostic(first_file_from_argv())
 
     # Se importa acá, después de activate(): importar `ui` arrastra `engine`.
     from .ui import App, make_root

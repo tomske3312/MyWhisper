@@ -60,9 +60,9 @@ carpeta "cuda".
 
 SI ALGO FALLA
 -------------
-Abre MyWhisper-Diagnostico.exe, saca una foto a la ventana y mándasela
-a quien te pasó el programa. El archivo MyWhisper.log también ayuda: no
-incluye lo que se dice en tus audios, pero revísalo antes de mandarlo.
+Manda el archivo MyWhisper.log (está en esta misma carpeta) a quien te
+pasó el programa. No incluye lo que se dice en tus audios, pero revísalo
+antes de mandarlo.
 
 
 PARA DESINSTALAR

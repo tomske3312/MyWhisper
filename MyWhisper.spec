@@ -84,28 +84,12 @@ exe = EXE(
     icon=ICONO,
 )
 
-# Segundo ejecutable, CON consola, para cuando algo falla en una máquina a la
-# que no tengo acceso. Comparte el mismo COLLECT que el principal, así que sale
-# gratis: son unos pocos MB de bootloader, no otra copia de las librerías.
-# `main.py` entra en modo diagnóstico al ver este nombre en sys.executable.
-exe_diagnostico = EXE(
-    pyz,
-    a.scripts,
-    [],
-    exclude_binaries=True,
-    name="MyWhisper-Diagnostico",
-    debug=False,
-    bootloader_ignore_signals=False,
-    strip=False,
-    upx=False,
-    console=True,
-    disable_windowed_traceback=False,
-    icon=ICONO,
-)
-
+# Un solo ejecutable, a propósito. Hubo un MyWhisper-Diagnostico.exe con consola
+# al lado del principal; se quitó porque un segundo .exe que "revisa tu PC"
+# resta confianza a quien recibe la app. El diagnóstico sigue disponible para
+# desarrollo desde el código: `python run.py --diagnostico [audio]`.
 coll = COLLECT(
     exe,
-    exe_diagnostico,
     a.binaries,
     a.datas,
     strip=False,
