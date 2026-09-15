@@ -1,0 +1,16 @@
+# Entorno de compilación de MyWhisper (Windows, Python 3.11).
+#
+#   py -3.11 -m venv buildenv
+#   .\buildenv\Scripts\pip install -r requirements.txt
+#   .\build.ps1
+#
+# IMPORTANTE: no instalar acá ningún paquete `nvidia-*`. En Windows,
+# faster-whisper no los arrastra como dependencia, y esa es justamente la razón
+# por la que el paquete pesa 250 MB en vez de 2,2 GB. El soporte de GPU se
+# resuelve en runtime: la app baja las DLL de CUDA sólo si el usuario las pide.
+# Ver app/gpu.py.
+
+faster-whisper==1.2.1
+tkinterdnd2==0.6.2
+sv-ttk==2.6.1
+pyinstaller==6.22.0

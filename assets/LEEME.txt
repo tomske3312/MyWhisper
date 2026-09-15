@@ -1,0 +1,73 @@
+===============================================================
+  MyWhisper — convierte audio en texto
+  Versión 0.1.0 BETA
+===============================================================
+
+Le das una grabación (una clase, una reunión, un video) y te devuelve
+un archivo de texto con lo que se dice.
+
+Todo pasa dentro de tu computador. Tu audio no se sube a ningún lado.
+
+
+CÓMO SE USA
+-----------
+1. Descomprime esta carpeta donde quieras. No se instala nada.
+2. Abre MyWhisper.exe
+3. Arrastra tu audio a la ventana (o haz clic para buscarlo).
+4. Aprieta "Transcribir".
+
+El texto queda junto al audio. Para guardarlo en otra carpeta, usa el
+botón "Cambiar…".
+
+
+OPCIONES
+--------
+  Calidad    Estándar es rápida. Alta y Máxima entienden mejor el audio
+             difícil, pero se descargan la primera vez (1,5 y 3 GB).
+
+  Velocidad  Equilibrado te deja seguir usando el PC. Máximo va más
+             rápido, pero ocupa más el procesador.
+
+  Formato    Texto limpio      solo lo que se dice.
+             Con marcas        cada frase con su minuto.
+             Subtítulos .srt   para ver el texto sobre un video.
+
+  Marcar el tiempo cada N minutos: agrega una marca como [15:00] al
+  texto limpio, para ubicar partes de una clase.
+
+
+LA PRIMERA VEZ, WINDOWS VA A DESCONFIAR
+---------------------------------------
+Verás "Windows protegió tu PC". No es un virus: el programa no está
+firmado, un trámite pagado que no se justifica para una beta.
+
+Para verificar que el archivo llegó intacto, pide el código SHA-256 del
+ZIP por OTRO medio (si te llegó por WhatsApp, pídelo por correo) y
+compáralo con el que muestra este comando en PowerShell:
+
+    Get-FileHash MyWhisper-0.1.0-beta.zip -Algorithm SHA256
+
+Nunca desactives tu antivirus para abrir este ni ningún otro programa.
+
+
+SI TIENES PLACA NVIDIA
+----------------------
+El botón "Acelerar con placa NVIDIA" hace todo unas 3 veces más rápido.
+Descarga 1,3 GB de librerías, verificadas antes de usarse. No pide
+permisos de administrador ni toca tu driver. Para quitarlo, borra la
+carpeta "cuda".
+
+
+SI ALGO FALLA
+-------------
+Abre MyWhisper-Diagnostico.exe, saca una foto a la ventana y mándasela
+a quien te pasó el programa. El archivo MyWhisper.log también ayuda: no
+incluye lo que se dice en tus audios, pero revísalo antes de mandarlo.
+
+
+PARA DESINSTALAR
+----------------
+Borra la carpeta. No queda nada más en tu computador.
+
+Las licencias de los componentes incluidos están en la carpeta
+"licencias".

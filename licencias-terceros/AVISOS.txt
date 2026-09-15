@@ -1,0 +1,71 @@
+===============================================================
+  MyWhisper — Avisos de software de terceros
+===============================================================
+
+MyWhisper se distribuye junto con componentes de otros proyectos.
+Cada uno conserva su propia licencia. Los textos completos están en
+esta misma carpeta ("licencias"), incluidos los que cada paquete de
+Python trae consigo, copiados automáticamente al compilar.
+
+
+COMPONENTES CON LICENCIA GNU (LGPL / GPL)
+-----------------------------------------
+Se enumeran aparte porque exigen, además del texto de la licencia,
+que el código fuente correspondiente esté disponible.
+
+  FFmpeg (libavcodec 62.28, libavformat 62.12, libavutil 60.26,
+  libavfilter 11.14, libswresample 6.3, libswscale 9.5)
+      Licencia : LGPL versión 3 o posterior  -> LGPL-3.0.txt, GPL-3.0.txt
+      Uso      : decodificar el audio y el video de entrada.
+      Origen   : incluido en PyAV 18.1.0 (paquete "av" de PyPI).
+      Fuentes  : https://ffmpeg.org/download.html
+                 Cómo se compila para PyAV:
+                 https://github.com/PyAV-Org/pyav-ffmpeg
+
+  x264
+      Licencia : GPL versión 2 o posterior    -> GPL-2.0.txt
+      Uso      : ninguno en MyWhisper. Es un codificador de video; viaja
+                 porque la biblioteca de FFmpeg incluida lo requiere para
+                 cargar. Quitarlo impide abrir cualquier audio.
+      Fuentes  : https://code.videolan.org/videolan/x264
+
+  x265
+      Licencia : GPL versión 2 o posterior    -> GPL-2.0.txt
+      Uso      : ídem x264.
+      Fuentes  : https://bitbucket.org/multicoreware/x265_git/src/master/
+
+
+MODELO DE RECONOCIMIENTO DE VOZ
+-------------------------------
+  Whisper (OpenAI), en la conversión a CTranslate2 de Systran
+      Licencia : MIT                          -> whisper-modelo-LICENSE.txt
+      Incluido : modelo "small" (commit 536b066 de Systran/faster-whisper-small)
+      Origen   : https://huggingface.co/Systran/faster-whisper-small
+      Los modelos "medium" y "large-v3" no se incluyen: se descargan de
+      Hugging Face sólo si el usuario los elige, con la misma licencia.
+
+
+BIBLIOTECAS PRINCIPALES
+-----------------------
+  faster-whisper 1.2.1 ...... MIT         (SYSTRAN)
+  CTranslate2 4.8.1 ......... MIT         -> ctranslate2-LICENSE.txt
+  PyAV 18.1.0 ............... BSD-3-Clause
+  ONNX Runtime 1.28.0 ....... MIT         (trae su propio ThirdPartyNotices)
+  tokenizers 0.23.1 ......... Apache-2.0  -> tokenizers-LICENSE.txt
+  huggingface_hub 1.27.0 .... Apache-2.0
+  NumPy 2.4.6 ............... BSD-3-Clause
+  tkinterdnd2 0.6.2 ......... MIT
+  sv-ttk 2.6.1 .............. MIT
+  flatbuffers 25.12.19 ...... Apache-2.0  -> flatbuffers-LICENSE.txt
+  Python 3.11 y Tcl/Tk ...... PSF / licencia Tcl (incluidas por PyInstaller)
+
+  El resto de las dependencias indirectas (tqdm, certifi, httpx, PyYAML,
+  protobuf, filelock, entre otras) tienen licencias permisivas (MIT, BSD,
+  Apache-2.0, MPL-2.0); sus textos se copian a esta carpeta al compilar.
+
+
+LO QUE NO SE DISTRIBUYE
+-----------------------
+  Las bibliotecas CUDA de NVIDIA (cuBLAS, cuDNN, runtime, NVRTC) NO vienen
+  en este paquete. Si el usuario activa la aceleración por GPU, la app las
+  descarga desde PyPI en su propio equipo, bajo la licencia de NVIDIA.

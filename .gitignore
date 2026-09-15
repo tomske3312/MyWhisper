@@ -1,0 +1,25 @@
+# Entorno de compilación y salidas
+buildenv/
+build/
+dist/
+*.spec.bak
+
+# El modelo pesa 464 MB: build.ps1 lo baja solo si falta.
+models/
+
+# El pack CUDA nunca se versiona: son 1,5 GB de DLL de NVIDIA que la app
+# descarga a pedido. Ver app/gpu.py.
+cuda/
+
+# Generados
+assets/*.ico
+_test/
+_cudatest/
+MyWhisper.log*
+MyWhisper.config.json
+# Nombres de antes del cambio a MyWhisper: siguen fuera del repositorio.
+MiWhisper.log*
+MiWhisper.config.json
+
+__pycache__/
+*.pyc
