@@ -13,6 +13,15 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+# PyInstaller y pip escriben su progreso normal por stderr. Con "Stop", PowerShell
+# 5.1 convierte esa salida en un error fatal apenas se redirige (un log, una
+# tarea programada). Los programas externos se juzgan por su código de salida.
+function Invoke-Externo([scriptblock]$bloque) {
+    $previo = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try { & $bloque } finally { $ErrorActionPreference = $previo }
+}
 $raiz   = $PSScriptRoot
 $python = Join-Path $raiz "buildenv\Scripts\python.exe"
 
@@ -26,12 +35,12 @@ Write-Host "== MyWhisper $version ==" -ForegroundColor Cyan
 # El modelo no está en git (pesa 464 MB); se baja si falta.
 if (-not (Test-Path (Join-Path $raiz "models\small\model.bin"))) {
     Write-Host "-- Descargando el modelo small (una sola vez)..." -ForegroundColor Yellow
-    & $python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-small', revision='536b0662742c02347bc0e980a01041f333bce120', local_dir='models/small', allow_patterns=['*.bin','*.json','*.txt'])"
+    Invoke-Externo { & $python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-small', revision='536b0662742c02347bc0e980a01041f333bce120', local_dir='models/small', allow_patterns=['*.bin','*.json','*.txt'])" }
 }
 
 if (-not (Test-Path (Join-Path $raiz "assets\MyWhisper.ico"))) {
     Write-Host "-- Generando el icono..." -ForegroundColor Yellow
-    & $python (Join-Path $raiz "tools\make_icon.py")
+    Invoke-Externo { & $python (Join-Path $raiz "tools\make_icon.py") }
 }
 
 $salida = Join-Path $raiz "dist\MyWhisper"
@@ -73,13 +82,13 @@ try {
 Apartar-DatosLocales
 
 Write-Host "-- Compilando..." -ForegroundColor Yellow
-& $python -m PyInstaller --noconfirm --clean (Join-Path $raiz "MyWhisper.spec")
+Invoke-Externo { & $python -m PyInstaller --noconfirm --clean (Join-Path $raiz "MyWhisper.spec") }
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller falló" }
 
 Copy-Item (Join-Path $raiz "assets\LEEME.txt") $salida -Force
 
-# Toda licencia de terceros que viaja en el paquete. Ver toolsecolectar_licencias.py.
-& $python (Join-Path $raiz "toolsecolectar_licencias.py") $salida
+# Toda licencia de terceros que viaja en el paquete. Ver tools\recolectar_licencias.py.
+Invoke-Externo { & $python (Join-Path $raiz "tools\recolectar_licencias.py") $salida }
 if ($LASTEXITCODE -ne 0) { throw "No se pudieron recolectar las licencias" }
 
 $mb = [math]::Round((Get-ChildItem $salida -Recurse | Measure-Object -Property Length -Sum).Sum / 1MB)
