@@ -46,6 +46,6 @@ py -3.11 -m venv buildenv
 
 ## Licencia
 
-Sin licencia por ahora: todos los derechos reservados.
+[MIT](LICENSE) — puedes usar, modificar y redistribuir el código, manteniendo el aviso de copyright.
 
-Los componentes de terceros incluidos al compilar (FFmpeg, x264, x265, el modelo Whisper y otros) conservan sus propias licencias. Ver [`licencias-terceros/AVISOS.txt`](licencias-terceros/AVISOS.txt).
+Los componentes de terceros que viajan en el ejecutable (FFmpeg bajo LGPL-3.0, x264 y x265 bajo GPL-2.0, el modelo Whisper bajo MIT, entre otros) conservan sus propias licencias, y sus textos se incluyen en el paquete. Ver [`licencias-terceros/AVISOS.txt`](licencias-terceros/AVISOS.txt).
